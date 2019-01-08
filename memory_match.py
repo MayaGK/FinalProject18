@@ -4,7 +4,7 @@ options = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
 first_card = 0
 second_card = 0
-
+selected = False
 card_count = 16
 
 class Card:
@@ -49,39 +49,54 @@ def playing(deck):
     return active
 
 def guess_match():
-    global first_card
-    global second_card
+   global first_card
+   global second_card
+   global selected
 
-    first_card = int(input("Select first card (input card number)"))
+   while not selected:
 
-    while first_card > 15 or first_card < 0:
-        print('Please select a number from 0 to 15')
-        first_card = int(input("Select first card (input card number)"))
+       try:
+           first_card = int(input("Select first card (input card number)"))
 
-    while cards[first_card].active == False:
-        print('You already found the match for that card')
-        first_card = int(input("Select first card (input card number)"))
+           if 0 < first_card < 15 and cards[first_card].active == True:
+               selected = True
+           elif first_card > 15 or first_card < 0:
+               print("Please select a number from 0 to 15")
+           elif cards[first_card].active == False:
+               print('You already found the match for that card')
+               selected = False
+
+       except ValueError:
+           print("Please input a number")
+
+   selected = False
+
+   while not selected:
+
+       try:
+           second_card = int(input("Select second card (input card number)"))
+
+           if 0 < second_card < 15 and cards[second_card].active == True:
+               selected = True
+           elif second_card > 15 or second_card < 0:
+               print("Please select a number from 0 to 15")
+           elif cards[second_card].active == False:
+               print('You already found the match for that card')
+           if second_card == first_card:
+               print('You can\'t choose the same first and second card!')
+               selected = False
 
 
+       except ValueError:
+           print("Please input a number")
 
-    second_card = int(input("Select second card (input card number)"))
+   selected = False
 
-    while second_card > 15 or first_card < 0:
-        print('Please select a number from 0 to 15')
-        second_card = int(input("Select second card (input card number)"))
+   cards[first_card].active = False
+   cards[second_card].active = False
 
-    while second_card == first_card:
-        print('You must pick 2 different cards')
-        second_card = int(input("Select second card (input card number)"))
+   return
 
-    while cards[second_card].active == False:
-        print('You already found the match for that card')
-        second_card = int(input("Select first card (input card number)"))
-
-    cards[first_card].active = False
-    cards[second_card].active = False
-
-    return
 
 def display_board():
 
