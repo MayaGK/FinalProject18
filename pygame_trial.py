@@ -35,13 +35,13 @@ def make_board():
     
     random.shuffle(cards)
 
-    i = 1
-    for card in cards:
-        if card.active:
-            window.blit(cardImg, (i * 45, 45))
-        else:
-            window.blit(card.content, (i * 45, 45))
-        i += 1
+    # i = 1
+    # for card in cards:
+    #     if card.active:
+    #         window.blit(cardImg, (i * 45, 45))
+    #     else:
+    #         window.blit(card.content, (i * 45, 45))
+    #     i += 1
 
 
 def playing(deck):
@@ -58,11 +58,33 @@ done = False
 
 def display_board():
 
+    i = 1
+    j = 0
+
     for card in cards:
-        if card.active:
-            window.blit(cardImg, (i * 45, 45))
-        else:
-            window.blit(card.content, (i * 45, 45))
+        if j < 5:
+            
+            if card.active:
+                window.blit(cardImg, ((i * 110) - 25, 45))
+            else:
+                window.blit(card.content, ((i * 110) - 25, 45))
+           
+        elif 5 <= j < 10:
+            
+            if card.active:
+                window.blit(cardImg,(((i-5) * 110) - 25, 200))
+            else:
+                window.blit(card.content, ((i-5) * 110, 200))
+        
+        elif 10 <= j < 15:
+            
+            if card.active:
+                window.blit(cardImg,(((i-10) * 110) - 25, 355))
+            else:
+                window.blit(card.content, (((i-10) * 110, 355))
+
+        j += 1
+        i += 1
     return
 
 make_board()
@@ -71,8 +93,7 @@ while not done:
         if ev.type == pygame.QUIT:
             break
         
-        # for card in cards:
-        #     window.blit(cardImg, (i, 1))
+        display_board()
 
         pygame.display.update()
         pygame.display.flip()
