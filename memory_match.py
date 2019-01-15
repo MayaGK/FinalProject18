@@ -58,7 +58,7 @@ def guess_match():
        try:
            first_card = int(input("Select first card (input card number)"))
 
-           if 0 < first_card < 15 and cards[first_card].active == True:
+           if 0 <= first_card <= 15 and cards[first_card].active == True:
                selected = True
            elif first_card > 15 or first_card < 0:
                print("Please select a number from 0 to 15")
@@ -76,7 +76,7 @@ def guess_match():
        try:
            second_card = int(input("Select second card (input card number)"))
 
-           if 0 < second_card < 15 and cards[second_card].active == True:
+           if 0 <= second_card <= 15 and cards[second_card].active == True:
                selected = True
            elif second_card > 15 or second_card < 0:
                print("Please select a number from 0 to 15")

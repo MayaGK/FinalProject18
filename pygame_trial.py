@@ -13,15 +13,24 @@ cardImg = pygame.image.load('cardback.png')
 
 options = [pygame.image.load('2_of_hearts.png'), pygame.image.load('3_of_hearts.png'), pygame.image.load('4_of_hearts.png'), pygame.image.load('5_of_hearts.png'), pygame.image.load('6_of_hearts.png'), pygame.image.load('7_of_hearts.png'), pygame.image.load('8_of_hearts.png'), pygame.image.load('9_of_hearts.png'), pygame.image.load('10_of_hearts.png'), pygame.image.load('ace_of_hearts.png')]
 
+first_card = -1
+first_card_selected = False
+second_card = -1
+second_card_selected = False
+
 card_count = 20
 
 card_cood = []
 
 card_location = 0
 
+highlighted_card = pygame.Surface((100, 142))
+highlighted_card.set_alpha(192)
+highlighted_card.fill((128,0,128))
+
 selected_card = pygame.Surface((100, 142))
 selected_card.set_alpha(192)
-selected_card.fill((128,0,128))
+selected_card.fill((255,215,0))
 
 class Card:
 
@@ -89,23 +98,43 @@ def make_array():
         j += 1
         i += 1
 
-def select_cards():
+def highlight_cards():
     global card_location
 
     key = pygame.key.get_pressed()
 
     try:
-        window.blit(selected_card, card_cood[card_location])
+        window.blit(highlighted_card, card_cood[card_location])
 
     except IndexError:
         card_location = 0
-        window.blit(selected_card, card_cood[card_location])
+        window.blit(highlighted_card, card_cood[card_location])
 
     if key[pygame.K_RIGHT]:
         card_location += 1
     
     if key[pygame.K_LEFT]:
         card_location -= 1
+
+def select_cards():
+    global first_card
+    global second_card
+    global first_card_selected
+    global second_card_selected
+    
+    key = pygame.key.get_pressed()
+
+    while not first_card_selected:
+        try:
+            if key[pygame.K_KP_ENTER]:
+                first_card = card_location
+                window.blit(selected_card, card_cood[card_location])
+                first_card_selected = True
+
+
+return
+
+
 
 def display_board():
 
@@ -152,6 +181,8 @@ while not done:
         
         display_board()
         select_cards()
+        highlight_cards()
+       
 
         pygame.display.update()
         pygame.display.flip()
