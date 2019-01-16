@@ -210,7 +210,7 @@ while not done:
         key = pygame.key.get_pressed()
 
         if show_instrustions:
-            window.blit(pygame.image.load('instructions.png'), (10,20))
+            window.blit(pygame.image.load('memory_match_instructions.png'), (10,20))
             pygame.display.update()
             if key[pygame.K_SPACE]:
                 show_instrustions = False
