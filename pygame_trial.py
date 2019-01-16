@@ -1,9 +1,11 @@
 import pygame
 import random
+import time
 
 pygame.init()
 
 clock = pygame.time.Clock()
+
 
 window = pygame.display.set_mode((700,700))
 
@@ -37,6 +39,8 @@ class Card:
     def __init__(self, content):
         self.content = content
         self.active = True
+        self.selected = False
+        self.pos = (0,0)
 
     def __str__(self):
         return str(self.content)
@@ -82,18 +86,18 @@ def make_array():
 
     for card in cards:
         if j < 5: 
-            pos = ((i * 110) - 25, 45)
+            card.pos = ((i * 110) - 25, 45)
 
         elif 5 <= j < 10:
-            pos = (((i-5) * 110) - 25, 200)
+            card.pos = (((i-5) * 110) - 25, 200)
         
         elif 10 <= j < 15:
-            pos = (((i-10) * 110) - 25, 355)
+            card.pos = (((i-10) * 110) - 25, 355)
         
         elif 15 <= j < 20:
-            pos = (((i-15) * 110) - 25, 510)
+            card.pos = (((i-15) * 110) - 25, 510)
 
-        card_cood.append(pos)
+        card_cood.append(card.pos)
 
         j += 1
         i += 1
@@ -116,57 +120,49 @@ def highlight_cards():
     if key[pygame.K_LEFT]:
         card_location -= 1
 
-def select_cards():
+def select_first_card():
     global first_card
     global second_card
     global first_card_selected
     global second_card_selected
     
+
     key = pygame.key.get_pressed()
-    print(key[pygame.K_RETURN])
+    
+
     if not first_card_selected:
-        if key[pygame.K_RETURN]:
+        if key[pygame.K_1]:
             first_card = card_location
-            window.blit(selected_card, card_cood[card_location])
+            cards[first_card].selected = True
             first_card_selected = True
-        # except:
-        #     pass
+
     return
 
+def select_second_card():
+    global second_card
+    global second_card_selected
+    
+    key = pygame.key.get_pressed()
+            
+    if not second_card_selected:
+        if key[pygame.K_2]:
+            second_card = card_location
+            cards[second_card].selected = True
+            second_card_selected = True
 
+   
+
+# def flip_cards():
+#     for card
 
 def display_board():
 
-    i = 1
-    j = 0
-
     for card in cards:
-        if j < 5:
-            if card.active: 
-                window.blit(cardImg, ((i * 110) - 25, 45))
-            else:
-                window.blit(card.content, ((i * 110) - 25, 45))
+        if card.active: 
+            window.blit(cardImg, card.pos)
+        else:
+            window.blit(card.content, card.pos)
            
-        elif 5 <= j < 10:
-            if card.active:   
-                window.blit(cardImg,(((i-5) * 110) - 25, 200))
-            else:
-                window.blit(card.content, (((i-5) * 110) - 25, 200))
-        
-        elif 10 <= j < 15:
-            if card.active: 
-                window.blit(cardImg,(((i-10) * 110) - 25, 355))
-            else:
-                window.blit(card.content, (((i-10) * 110) -25, 355))
-        
-        elif 15 <= j < 20:
-            if card.active: 
-                window.blit(cardImg,(((i-15) * 110) - 25, 510))
-            else:
-                window.blit(card.content, (((i-15) * 110) - 25, 510))
-
-        j += 1
-        i += 1
     return
 
 done = False
@@ -179,9 +175,19 @@ while not done:
             break
         
         display_board()
-        select_cards()
+        
+        
+        # if not first_card_selected:
+        select_first_card()
+
+        # if first_card_selected and not second_card_selected:    
+        select_second_card()
+        
+        for card in cards:
+            if card.selected == True:
+                window.blit(selected_card, card.pos)
+
         highlight_cards()
-       
 
         pygame.display.update()
         pygame.display.flip()
