@@ -59,14 +59,6 @@ def make_board():
     
     random.shuffle(cards)
 
-    # i = 1
-    # for card in cards:
-    #     if card.active:
-    #         window.blit(cardImg, (i * 45, 45))
-    #     else:
-    #         window.blit(card.content, (i * 45, 45))
-    #     i += 1
-
 
 def playing(deck):
 
@@ -189,7 +181,7 @@ def flip_cards():
     return
 
 def display_board():
-
+    window.fill((0, 0, 0))
     for card in cards:
         if card.active: 
             window.blit(cardImg, card.pos)
@@ -204,6 +196,15 @@ def game_won():
 
 done = False
 
+show_instrustions = True
+
+key = pygame.key.get_pressed()
+
+if show_instrustions:
+    window.blit(pygame.image.load('instructions.png'), (0,20))
+    if key[pygame.K_SPACE]:
+        show_instrustions = False
+
 make_board()
 make_array()
 
@@ -212,28 +213,35 @@ while not done:
         if ev.type == pygame.QUIT:
             break
         
-        display_board()
-        
-        
-        # if not first_card_selected:
-        select_first_card()
+        key = pygame.key.get_pressed()
 
-        # if first_card_selected and not second_card_selected:    
-        select_second_card()
-        
-        for card in cards:
-            if card.selected == True:
-                window.blit(selected_card, card.pos)
+        if show_instrustions:
+            window.blit(pygame.image.load('instructions.png'), (0,20))
+            pygame.display.update()
+            if key[pygame.K_SPACE]:
+                show_instrustions = False
+        else:
+            display_board()
+            
+            
+            select_first_card()
 
-        flip_cards()
+            
+            select_second_card()
+            
+            for card in cards:
+                if card.selected == True:
+                    window.blit(selected_card, card.pos)
+
+            flip_cards()
 
 
 
-        highlight_cards()
+            highlight_cards()
 
-        game_won()
+            game_won()
 
-        pygame.display.update()
-        pygame.display.flip()
-        clock.tick(10)
+            pygame.display.update()
+            pygame.display.flip()
+            clock.tick(10)
 
