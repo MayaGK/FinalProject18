@@ -123,16 +123,15 @@ def select_cards():
     global second_card_selected
     
     key = pygame.key.get_pressed()
-
-    while not first_card_selected:
-        try:
-            if key[pygame.K_KP_ENTER]:
-                first_card = card_location
-                window.blit(selected_card, card_cood[card_location])
-                first_card_selected = True
-
-
-return
+    print(key[pygame.K_RETURN])
+    if not first_card_selected:
+        if key[pygame.K_RETURN]:
+            first_card = card_location
+            window.blit(selected_card, card_cood[card_location])
+            first_card_selected = True
+        # except:
+        #     pass
+    return
 
 
 
