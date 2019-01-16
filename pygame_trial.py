@@ -6,6 +6,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 
+S = 1 
 
 window = pygame.display.set_mode((700,700))
 
@@ -131,7 +132,7 @@ def select_first_card():
     
 
     if not first_card_selected:
-        if key[pygame.K_1]:
+        if key[pygame.K_1] and cards[card_location].active == True:
             first_card = card_location
             cards[first_card].selected = True
             first_card_selected = True
@@ -145,7 +146,7 @@ def select_second_card():
     key = pygame.key.get_pressed()
             
     if not second_card_selected:
-        if key[pygame.K_2]:
+        if key[pygame.K_2] and cards[card_location].active == True and card_location != first_card:
             second_card = card_location
             cards[second_card].selected = True
             second_card_selected = True
@@ -155,27 +156,37 @@ def select_second_card():
 def flip_cards():
     global first_card_selected
     global second_card_selected
+    global S
+    
     key = pygame.key.get_pressed()
-   
+
+
     if key[pygame.K_RETURN]:
        for card in cards:
             if first_card_selected and second_card_selected:
                 cards[first_card].active = False
                 cards[second_card].active = False
                 cards[first_card].selected = False
-                cards[second_card].selected = False                
+                cards[second_card].selected = False 
+                S = 2
+
+
     if key[pygame.K_SPACE]:
-        if not cards[first_card].content == cards[second_card].content:
-           cards[first_card].active = True
-           cards[second_card].active = True
-        first_card_selected = False
-        second_card_selected = False
+        if S == 2:
+            if not cards[first_card].content == cards[second_card].content:
+                cards[first_card].active = True
+                cards[second_card].active = True
+                first_card_selected = False
+                second_card_selected = False
+                S = 1
+            else:
+                first_card_selected = False
+                second_card_selected = False
+                S = 1
+        else:
+            pass
 
     return
-
-
-
-
 
 def display_board():
 
@@ -187,10 +198,14 @@ def display_board():
            
     return
 
+def game_won():
+     window.blit(pygame.image.load('img_you_win.png'), (350,350))
+
 done = False
 
 make_board()
 make_array()
+
 while not done:
         ev = pygame.event.poll()
         if ev.type == pygame.QUIT:
@@ -218,3 +233,5 @@ while not done:
         pygame.display.update()
         pygame.display.flip()
         clock.tick(10)
+
+game_won()
