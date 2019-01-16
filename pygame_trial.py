@@ -198,8 +198,9 @@ def display_board():
            
     return
 
-def game_won():
-     window.blit(pygame.image.load('img_you_win.png'), (350,350))
+def game_won(): 
+    if all(card.active == False for card in cards):
+     window.blit(pygame.image.load('img_you_win.png'), (260,260))
 
 done = False
 
@@ -230,8 +231,9 @@ while not done:
 
         highlight_cards()
 
+        game_won()
+
         pygame.display.update()
         pygame.display.flip()
         clock.tick(10)
 
-game_won()
