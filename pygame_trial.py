@@ -152,8 +152,30 @@ def select_second_card():
 
    
 
-# def flip_cards():
-#     for card
+def flip_cards():
+    global first_card_selected
+    global second_card_selected
+    key = pygame.key.get_pressed()
+   
+    if key[pygame.K_RETURN]:
+       for card in cards:
+            if first_card_selected and second_card_selected:
+                cards[first_card].active = False
+                cards[second_card].active = False
+                cards[first_card].selected = False
+                cards[second_card].selected = False                
+    if key[pygame.K_SPACE]:
+        if not cards[first_card].content == cards[second_card].content:
+           cards[first_card].active = True
+           cards[second_card].active = True
+        first_card_selected = False
+        second_card_selected = False
+
+    return
+
+
+
+
 
 def display_board():
 
@@ -186,6 +208,10 @@ while not done:
         for card in cards:
             if card.selected == True:
                 window.blit(selected_card, card.pos)
+
+        flip_cards()
+
+
 
         highlight_cards()
 
