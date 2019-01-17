@@ -217,9 +217,16 @@ def display_board():
            
     return
 
+def text_objects(text, font):
+    textSurface = font.render(text, True, (255,0,0))
+    return textSurface, textSurface.get_rect()
+
 def game_won(): 
     window.blit(pygame.image.load('img_you_win.png'), (260,260))
-    
+    largeText = pygame.font.Font('freesansbold.ttf',25)
+    TextSurf, TextRect = text_objects('(press enter to replay)', largeText)
+    TextRect.center = (350,475)
+    window.blit(TextSurf, TextRect)
     key = pygame.key.get_pressed()
 
     if key[pygame.K_RETURN]:
@@ -245,7 +252,10 @@ while not done:
 
         #displays game instructions until the user hits the spacebar
         if show_instrustions:
-            window.blit(pygame.image.load('memory_match_instructions.png'), (10,20))
+            ev = pygame.event.poll()
+            if ev.type == pygame.QUIT:
+                break 
+            window.blit(pygame.image.load('updated_instructions.png'), (10,20))
             pygame.display.update()
             if key[pygame.K_SPACE]:
                 show_instrustions = False
@@ -278,6 +288,10 @@ while not done:
             
             #set game to run at 10 frames per second so that graphics don't move to fast
             clock.tick(10)
+   
+    ev = pygame.event.poll()
+    if ev.type == pygame.QUIT:
+        break
     pygame.display.update()
     game_won()
 
