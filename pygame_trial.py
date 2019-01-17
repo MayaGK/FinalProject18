@@ -251,6 +251,10 @@ while not done:
                 show_instrustions = False
         
         else:
+            ev = pygame.event.poll()
+            if ev.type == pygame.QUIT:
+                break    
+
             display_board()
             
             select_first_card()
