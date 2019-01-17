@@ -88,33 +88,42 @@ def playing(deck):
     return active
 
 def make_array():
-    """"""
+    """Asigns every card its own position in a 5x4 grid pattern"""
     i = 1
     j = 0
 
     for card in cards:
+        
+        #first row 
         if j < 5: 
             card.pos = ((i * 110) - 25, 45)
-
+        
+        #second row 
         elif 5 <= j < 10:
             card.pos = (((i-5) * 110) - 25, 200)
         
+        #third row
         elif 10 <= j < 15:
             card.pos = (((i-10) * 110) - 25, 355)
         
+        #fourth row
         elif 15 <= j < 20:
             card.pos = (((i-15) * 110) - 25, 510)
 
+        #adds the position of each card to a list
         card_cood.append(card.pos)
 
         j += 1
         i += 1
 
 def highlight_cards():
+    """Blit purple overlay at the user's current card"""
+
     global card_location
 
     key = pygame.key.get_pressed()
 
+    #try and except statement to protect against card_location being more or less tha the number of cards
     try:
         window.blit(highlighted_card, card_cood[card_location])
 
