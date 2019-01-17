@@ -19,7 +19,20 @@ pygame.display.set_caption('Memory Match')
 cardImg = pygame.image.load('cardback.png')
 
 #list of the front playing cards images to be used as content values
-options = [pygame.image.load('2_of_hearts.png'), pygame.image.load('3_of_hearts.png'), pygame.image.load('4_of_hearts.png'), pygame.image.load('5_of_hearts.png'), pygame.image.load('6_of_hearts.png'), pygame.image.load('7_of_hearts.png'), pygame.image.load('8_of_hearts.png'), pygame.image.load('9_of_hearts.png'), pygame.image.load('10_of_hearts.png'), pygame.image.load('ace_of_hearts.png')]
+options = {}
+terms_input = 1 
+def get_values():
+    global terms_input
+    print (options)
+    while terms_input < 11:
+        term = input(f"input term #{terms_input}")
+        value = input(f"input definition #{terms_input}")
+        options[term] = value
+        terms_input += 1
+        print (options)
+
+
+
 
 
 first_card = -1
@@ -235,6 +248,7 @@ def game_won():
         show_instructions = True
 
 
+get_values()
 
 make_board()
 make_array()
