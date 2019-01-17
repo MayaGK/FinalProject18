@@ -85,6 +85,11 @@ def playing(deck):
         if card.active:
             active = True
             return active
+    
+    if S == 2:
+        active = True
+        return active
+
     return active
 
 def make_array():
@@ -161,7 +166,7 @@ def select_second_card():
     
     key = pygame.key.get_pressed()
             
-    if not second_card_selected:
+    if not second_card_selected and first_card_selected:
         if key[pygame.K_2] and cards[card_location].active == True and card_location != first_card:
             second_card = card_location
             cards[second_card].selected = True
@@ -213,17 +218,28 @@ def display_board():
     return
 
 def game_won(): 
-    if all(card.active == False for card in cards):
-     window.blit(pygame.image.load('img_you_win.png'), (260,260))
+    window.blit(pygame.image.load('img_you_win.png'), (260,260))
+    
+    key = pygame.key.get_pressed()
+
+    if key[pygame.K_RETURN]:
+        for card in cards:
+            card.active = True
+        show_instructions = True
+
 
 
 make_board()
 make_array()
 
 while not done:
+    ev = pygame.event.poll()
+    if ev.type == pygame.QUIT:
+        break
+    while playing(cards):
         ev = pygame.event.poll()
         if ev.type == pygame.QUIT:
-            break
+            break    
         
         key = pygame.key.get_pressed()
 
@@ -250,7 +266,7 @@ while not done:
 
             highlight_cards()
 
-            game_won()
+
 
             #updates display as game gets input from user
             pygame.display.update()
@@ -258,4 +274,6 @@ while not done:
             
             #set game to run at 10 frames per second so that graphics don't move to fast
             clock.tick(10)
+    pygame.display.update()
+    game_won()
 
