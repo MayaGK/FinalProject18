@@ -218,7 +218,7 @@ def display_board():
     return
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, (255,0,0))
+    textSurface = font.render(text, True, (0,255,0))
     return textSurface, textSurface.get_rect()
 
 def game_won(): 
@@ -242,11 +242,11 @@ make_array()
 while not done:
     ev = pygame.event.poll()
     if ev.type == pygame.QUIT:
-        break
-    while playing(cards):
+        done = True
+    while playing(cards) and not done:
         ev = pygame.event.poll()
         if ev.type == pygame.QUIT:
-            break    
+            done = True    
         
         key = pygame.key.get_pressed()
 
@@ -254,7 +254,7 @@ while not done:
         if show_instrustions:
             ev = pygame.event.poll()
             if ev.type == pygame.QUIT:
-                break 
+                done = True 
             window.blit(pygame.image.load('updated_instructions.png'), (10,20))
             pygame.display.update()
             if key[pygame.K_SPACE]:
@@ -263,7 +263,7 @@ while not done:
         else:
             ev = pygame.event.poll()
             if ev.type == pygame.QUIT:
-                break    
+                done = True    
 
             display_board()
             
@@ -280,8 +280,6 @@ while not done:
 
             highlight_cards()
 
-
-
             #updates display as game gets input from user
             pygame.display.update()
             pygame.display.flip()
@@ -289,9 +287,6 @@ while not done:
             #set game to run at 10 frames per second so that graphics don't move to fast
             clock.tick(10)
    
-    ev = pygame.event.poll()
-    if ev.type == pygame.QUIT:
-        break
     pygame.display.update()
     game_won()
 
