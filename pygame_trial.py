@@ -6,7 +6,7 @@ pygame.init()
 #set clock that game runs on
 clock = pygame.time.Clock()
 
-S = 1 
+lock = True 
 
 #set size of game window
 window = pygame.display.set_mode((700,700))
@@ -85,7 +85,7 @@ def playing(deck):
             active = True
             return active
     
-    if S == 2:
+    if lock == False:
         active = True
         return active
 
@@ -174,7 +174,7 @@ def select_second_card():
 def flip_cards():
     global first_card_selected
     global second_card_selected
-    global S
+    global lock
     
     key = pygame.key.get_pressed()
 
@@ -186,21 +186,21 @@ def flip_cards():
                 cards[second_card].active = False
                 cards[first_card].selected = False
                 cards[second_card].selected = False 
-                S = 2
+                lock = False
 
 
     if key[pygame.K_SPACE]:
-        if S == 2:
+        if lock == False:
             if not cards[first_card].content == cards[second_card].content:
                 cards[first_card].active = True
                 cards[second_card].active = True
                 first_card_selected = False
                 second_card_selected = False
-                S = 1
+                lock = True
             else:
                 first_card_selected = False
                 second_card_selected = False
-                S = 1
+                lock = True
         else:
             pass
 
