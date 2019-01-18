@@ -222,17 +222,19 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 def game_won(): 
+   
     window.blit(pygame.image.load('img_you_win.png'), (260,260))
     largeText = pygame.font.Font('freesansbold.ttf',25)
     TextSurf, TextRect = text_objects('(press enter to replay)', largeText)
     TextRect.center = (350,475)
     window.blit(TextSurf, TextRect)
+   
     key = pygame.key.get_pressed()
 
     if key[pygame.K_RETURN]:
         for card in cards:
             card.active = True
-        show_instructions = True
+
 
 
 
