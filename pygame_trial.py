@@ -1,52 +1,8 @@
 import pygame
 import random
 
-pygame.init()
-
-#set clock that game runs on
-clock = pygame.time.Clock()
-
-lock = True 
-
-#set size of game window
-window = pygame.display.set_mode((700,700))
-
-#name the window the game pops up in
-pygame.display.set_caption('Memory Match')
-
-#image of the back of a playing card to be shown as default
-cardImg = pygame.image.load('cardback.png')
-
-#list of the front playing cards images to be used as content values
-options = [pygame.image.load('2_of_hearts.png'), pygame.image.load('3_of_hearts.png'), pygame.image.load('4_of_hearts.png'), pygame.image.load('5_of_hearts.png'), pygame.image.load('6_of_hearts.png'), pygame.image.load('7_of_hearts.png'), pygame.image.load('8_of_hearts.png'), pygame.image.load('9_of_hearts.png'), pygame.image.load('10_of_hearts.png'), pygame.image.load('ace_of_hearts.png')]
 
 
-first_card = -1
-first_card_selected = False
-second_card = -1
-second_card_selected = False
-
-card_count = 20
-
-cards = []
-
-card_cood = []
-
-card_location = 0
-
-done = False
-
-show_instrustions = True
-
-#purple overlay to indicate current location
-highlighted_card = pygame.Surface((100, 142))
-highlighted_card.set_alpha(192)
-highlighted_card.fill((128,0,128))
-
-#orange overlay to indicate selected cards
-selected_card = pygame.Surface((100, 142))
-selected_card.set_alpha(192)
-selected_card.fill((255,215,0))
 
 class Card:
 
@@ -235,8 +191,52 @@ def game_won():
             card.active = True
 
 
+#set clock that game runs on
+clock = pygame.time.Clock()
+
+lock = True 
+
+#set size of game window
+window = pygame.display.set_mode((700,700))
+
+#name the window the game pops up in
+pygame.display.set_caption('Memory Match')
+
+#image of the back of a playing card to be shown as default
+cardImg = pygame.image.load('cardback.png')
+
+#list of the front playing cards images to be used as content values
+options = [pygame.image.load('2_of_hearts.png'), pygame.image.load('3_of_hearts.png'), pygame.image.load('4_of_hearts.png'), pygame.image.load('5_of_hearts.png'), pygame.image.load('6_of_hearts.png'), pygame.image.load('7_of_hearts.png'), pygame.image.load('8_of_hearts.png'), pygame.image.load('9_of_hearts.png'), pygame.image.load('10_of_hearts.png'), pygame.image.load('ace_of_hearts.png')]
 
 
+first_card = -1
+first_card_selected = False
+second_card = -1
+second_card_selected = False
+
+card_count = 20
+
+cards = []
+
+card_cood = []
+
+card_location = 0
+
+done = False
+
+show_instrustions = True
+
+#purple overlay to indicate current location
+highlighted_card = pygame.Surface((100, 142))
+highlighted_card.set_alpha(192)
+highlighted_card.fill((128,0,128))
+
+#orange overlay to indicate selected cards
+selected_card = pygame.Surface((100, 142))
+selected_card.set_alpha(192)
+selected_card.fill((255,215,0))
+
+pygame.init()
 make_board()
 make_array()
 
