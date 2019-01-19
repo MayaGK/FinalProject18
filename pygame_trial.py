@@ -102,11 +102,9 @@ def highlight_cards():
     return
 
 def select_first_card():
-    global first_card
-    global second_card
-    global first_card_selected
-    global second_card_selected
 
+    global first_card
+    global first_card_selected
 
     key = pygame.key.get_pressed()
 
@@ -120,6 +118,7 @@ def select_first_card():
     return
 
 def select_second_card():
+
     global second_card
     global second_card_selected
 
@@ -134,6 +133,7 @@ def select_second_card():
     return
 
 def flip_cards():
+
     global first_card_selected
     global second_card_selected
     global lock
