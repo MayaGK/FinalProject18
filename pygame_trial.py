@@ -198,14 +198,16 @@ def display_board():
     return
 
 def text_objects(text, font):
-    
+    """Creates text surface to display words on"""
     textSurface = font.render(text, True, (0,255,0))
     
     return textSurface, textSurface.get_rect()
 
 def game_won(): 
     """Displays win image and gives option to restart"""
+   
     global cards
+   
     #win image
     window.blit(pygame.image.load('img_you_win.png'), (260,260))
     
@@ -217,13 +219,13 @@ def game_won():
    
     key = pygame.key.get_pressed()
 
+    #when enter key pressed shuffle board and restart
     if key[pygame.K_RETURN]:
         random.shuffle(cards)
+        #assign cards their new positions
         make_array()
         for card in cards:
             card.active = True
-
-
     
     return
 
@@ -277,8 +279,6 @@ selected_card.fill((255,215,0))
 pygame.init()
 make_board()
 make_array()
-# make_board()
-# make_array()
 
 while not done:
     ev = pygame.event.poll()
