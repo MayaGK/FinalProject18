@@ -26,21 +26,21 @@ def make_board():
         for i in range(2):
             cards.append(Card(options[0]))
         del options[0]
-
+    
     random.shuffle(cards)
 
 # !!!!!!!!!!!FUNCTION CURRENTLY NOT IN USE. USE INSTEAD OF DONE?
 def playing(deck):
     """Determines if any cards in the deck still need to be matched."""
-
+    
     active = False
 
-    #loops through all of the cards in a deck and if any are still active the
+    #loops through all of the cards in a deck and if any are still active the 
     for card in deck:
         if card.active:
             active = True
             return active
-
+    
     if lock == False:
         active = True
         return active
@@ -53,19 +53,19 @@ def make_array():
     j = 0
 
     for card in cards:
-
-        #first row
-        if j < 5:
+        
+        #first row 
+        if j < 5: 
             card.pos = ((i * 110) - 25, 45)
-
-        #second row
+        
+        #second row 
         elif 5 <= j < 10:
             card.pos = (((i-5) * 110) - 25, 200)
-
+        
         #third row
         elif 10 <= j < 15:
             card.pos = (((i-10) * 110) - 25, 355)
-
+        
         #fourth row
         elif 15 <= j < 20:
             card.pos = (((i-15) * 110) - 25, 510)
@@ -75,8 +75,6 @@ def make_array():
 
         j += 1
         i += 1
-
-        return
 
 def highlight_cards():
     """Blit purple overlay at the user's current card"""
@@ -95,19 +93,23 @@ def highlight_cards():
 
     if key[pygame.K_RIGHT]:
         card_location += 1
-
+    
     if key[pygame.K_LEFT]:
         card_location -= 1
 
     return
 
-def select_first_card():
+    
 
+def select_first_card():
     global first_card
+    global second_card
     global first_card_selected
+    global second_card_selected
+    
 
     key = pygame.key.get_pressed()
-
+    
 
     if not first_card_selected:
         if key[pygame.K_1] and cards[card_location].active == True:
@@ -118,26 +120,23 @@ def select_first_card():
     return
 
 def select_second_card():
-
     global second_card
     global second_card_selected
-
+    
     key = pygame.key.get_pressed()
-
+            
     if not second_card_selected and first_card_selected:
         if key[pygame.K_2] and cards[card_location].active == True and card_location != first_card:
             second_card = card_location
             cards[second_card].selected = True
-            second_card_selected = True
-
+            second_card_selected = True 
     return
 
 def flip_cards():
-
     global first_card_selected
     global second_card_selected
     global lock
-
+    
     key = pygame.key.get_pressed()
 
 
@@ -147,10 +146,8 @@ def flip_cards():
                 cards[first_card].active = False
                 cards[second_card].active = False
                 cards[first_card].selected = False
-                cards[second_card].selected = False
+                cards[second_card].selected = False 
                 lock = False
-
-
 
 
     if key[pygame.K_SPACE]:
@@ -173,38 +170,38 @@ def flip_cards():
 def display_board():
     window.fill((0, 0, 0))
     for card in cards:
-        if card.active:
+        if card.active: 
             window.blit(cardImg, card.pos)
         else:
             window.blit(card.content, card.pos)
-
+           
     return
 
 def text_objects(text, font):
     textSurface = font.render(text, True, (0,255,0))
     return textSurface, textSurface.get_rect()
 
-def game_won():
-
+def game_won(): 
+   
     window.blit(pygame.image.load('img_you_win.png'), (260,260))
     largeText = pygame.font.Font('freesansbold.ttf',25)
     TextSurf, TextRect = text_objects('(press enter to replay)', largeText)
     TextRect.center = (350,475)
     window.blit(TextSurf, TextRect)
-
+   
     key = pygame.key.get_pressed()
 
     if key[pygame.K_RETURN]:
         for card in cards:
             card.active = True
-
+    
     return
 
 
 #set clock that game runs on
 clock = pygame.time.Clock()
 
-lock = True
+lock = True 
 
 #set size of game window
 window = pygame.display.set_mode((700,700))
@@ -257,31 +254,31 @@ while not done:
     while playing(cards) and not done:
         ev = pygame.event.poll()
         if ev.type == pygame.QUIT:
-            done = True
-
+            done = True    
+        
         key = pygame.key.get_pressed()
 
         #displays game instructions until the user hits the spacebar
         if show_instrustions:
             ev = pygame.event.poll()
             if ev.type == pygame.QUIT:
-                done = True
+                done = True 
             window.blit(pygame.image.load('updated_instructions.png'), (10,20))
             pygame.display.update()
             if key[pygame.K_SPACE]:
                 show_instrustions = False
-
+        
         else:
             ev = pygame.event.poll()
             if ev.type == pygame.QUIT:
-                done = True
+                done = True    
 
             display_board()
-
+            
             select_first_card()
 
             select_second_card()
-
+            
             #if a card is selected it blits the previously created selected_card overlay on top of it
             for card in cards:
                 if card.selected == True:
@@ -293,11 +290,11 @@ while not done:
 
             #updates display as game gets input from user
             pygame.display.update()
-            pygame.display.flip()
 
-            #set game to run at 10 frames per second so that graphics don't move to fast
+            
+            #set game to run at 10 frames per second so that graphics don't move too fast
             clock.tick(10)
-
+   
     pygame.display.update()
     game_won()
 
