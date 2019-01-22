@@ -26,8 +26,10 @@ def make_board():
         for i in range(2):
             cards.append(Card(options[0]))
         del options[0]
-    
+
     random.shuffle(cards)
+    
+    return
 
 
 def playing(deck):
@@ -41,6 +43,7 @@ def playing(deck):
             active = True
             return active
     
+    #prevent game from ending until last cards are compared
     if lock == False:
         active = True
         return active
