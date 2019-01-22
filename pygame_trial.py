@@ -29,7 +29,7 @@ def make_board():
     
     random.shuffle(cards)
 
-# !!!!!!!!!!!FUNCTION CURRENTLY NOT IN USE. USE INSTEAD OF DONE?
+
 def playing(deck):
     """Determines if any cards in the deck still need to be matched."""
     
@@ -75,6 +75,8 @@ def make_array():
 
         j += 1
         i += 1
+    
+    return
 
 def highlight_cards():
     """Blit purple overlay at the user's current card"""
@@ -83,17 +85,20 @@ def highlight_cards():
 
     key = pygame.key.get_pressed()
 
-    #try and except statement to protect against card_location being more or less tha the number of cards
+    #try and except statement to protect against card_location being more or less than the number of cards
     try:
         window.blit(highlighted_card, card_cood[card_location])
 
+    #if error occurs automatically return to first card
     except IndexError:
         card_location = 0
         window.blit(highlighted_card, card_cood[card_location])
 
+    #move one card to right or if at rightmost card loop to next line
     if key[pygame.K_RIGHT]:
         card_location += 1
-    
+
+    #move one card to left or if at leftmost card loop to line above 
     if key[pygame.K_LEFT]:
         card_location -= 1
 
@@ -102,16 +107,16 @@ def highlight_cards():
     
 
 def select_first_card():
+    """Takes input from keys pressed to select first card"""
+
     global first_card
-    global second_card
     global first_card_selected
-    global second_card_selected
-    
 
     key = pygame.key.get_pressed()
-    
 
+    #set location the key is pressed to be the first card and tells card it has been selected
     if not first_card_selected:
+        #makes sure already matched cards cannot be selected a second time
         if key[pygame.K_1] and cards[card_location].active == True:
             first_card = card_location
             cards[first_card].selected = True
@@ -120,26 +125,33 @@ def select_first_card():
     return
 
 def select_second_card():
+    """Takes input from keys pressed to select second card"""
+
     global second_card
     global second_card_selected
     
     key = pygame.key.get_pressed()
-            
+    
+    #set location the key is pressed to be the second card and tells card it has been selected
     if not second_card_selected and first_card_selected:
+        #makes sure already matched cards cannot be selected a second time and the second card cannot be the same as the first
         if key[pygame.K_2] and cards[card_location].active == True and card_location != first_card:
             second_card = card_location
             cards[second_card].selected = True
             second_card_selected = True 
+   
     return
 
 def flip_cards():
+    """Displays selected cards' content to user and determines match"""
+
     global first_card_selected
     global second_card_selected
     global lock
     
     key = pygame.key.get_pressed()
 
-
+    #when enter key is pressed and both cards have been selected, deselect them and show their content values
     if key[pygame.K_RETURN]:
        for card in cards:
             if first_card_selected and second_card_selected:
@@ -147,28 +159,36 @@ def flip_cards():
                 cards[second_card].active = False
                 cards[first_card].selected = False
                 cards[second_card].selected = False 
+                #lock turned off so that cards can now be compared
                 lock = False
 
-
+    #when space key is pressed and the lock is off
     if key[pygame.K_SPACE]:
         if lock == False:
+            #if the cards don't match return them to active deck and resest selected variables
             if not cards[first_card].content == cards[second_card].content:
                 cards[first_card].active = True
                 cards[second_card].active = True
                 first_card_selected = False
                 second_card_selected = False
                 lock = True
+            #if the cards do match leave them in inactive deck and reset selected variables
             else:
                 first_card_selected = False
                 second_card_selected = False
                 lock = True
+        #if space key is pressed but lock is still on do nothing
         else:
             pass
 
     return
 
 def display_board():
+    """Blits card back or content depending on active status"""
+   
+    #fill window black to cover instructions
     window.fill((0, 0, 0))
+   
     for card in cards:
         if card.active: 
             window.blit(cardImg, card.pos)
@@ -178,12 +198,18 @@ def display_board():
     return
 
 def text_objects(text, font):
+    
     textSurface = font.render(text, True, (0,255,0))
+    
     return textSurface, textSurface.get_rect()
 
 def game_won(): 
-   
+    """Displays win image and gives option to restart"""
+    global cards
+    #win image
     window.blit(pygame.image.load('img_you_win.png'), (260,260))
+    
+    #explain how to restart game
     largeText = pygame.font.Font('freesansbold.ttf',25)
     TextSurf, TextRect = text_objects('(press enter to replay)', largeText)
     TextRect.center = (350,475)
@@ -192,8 +218,12 @@ def game_won():
     key = pygame.key.get_pressed()
 
     if key[pygame.K_RETURN]:
+        random.shuffle(cards)
+        make_array()
         for card in cards:
             card.active = True
+
+
     
     return
 
@@ -201,6 +231,7 @@ def game_won():
 #set clock that game runs on
 clock = pygame.time.Clock()
 
+#saftey variable to make sure cards can't becompared before they are flipped
 lock = True 
 
 #set size of game window
@@ -246,6 +277,8 @@ selected_card.fill((255,215,0))
 pygame.init()
 make_board()
 make_array()
+# make_board()
+# make_array()
 
 while not done:
     ev = pygame.event.poll()
