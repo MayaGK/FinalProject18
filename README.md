@@ -1,3 +1,12 @@
+Game Information:
+
+The game is a memory match game with a deck of 20 total cards and 10 total matches.
+The cards randomly shuffle and appear face down at the beginning of every game to create a unique board.
+It is the user's job to memorize the locaions of cards and find all of the matches.
+Users play by using arrow keys to navagate the screen, 1 and 2 keys to select their cards,
+and the enter and space keys to identify cards and matches.
+
+
 Citations:
 
 Curt. “Playing Cards (Vector & PNG).” OpenGameArt.org, OpenGameArt.org, 17 Apr. 2013,
