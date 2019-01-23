@@ -5,6 +5,7 @@ import random
 
 
 class Card:
+    """Creates cards in deck with specified content"""
 
     def __init__(self, content):
         self.content = content
@@ -285,6 +286,7 @@ make_board()
 make_array()
 
 while not done:
+    #if user clicks x quit game
     ev = pygame.event.poll()
     if ev.type == pygame.QUIT:
         done = True
